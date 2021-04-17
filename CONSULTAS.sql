@@ -72,6 +72,19 @@ MONTH(R.datoFecha) = 1 and YEAR(R.datoFecha) = 2021)
 group by MONTH(R.datoFecha),YEAR(R.datoFecha),P.location
 order by Aceleracion desc;
 
+
+----- propuesta de consulta
+
+SELECT TOP 2 P.location as Pais,avg(C.new_cases) as Aceleracion,
+MONTH(R.datoFecha),YEAR(R.datoFecha)
+from Registro as R
+inner join Casos C on C.Registro_Id = R.Id
+inner join Pais as P on R.Pais_Id = P.Id and 
+(MONTH(R.datoFecha) = 12 and YEAR(R.datoFecha) = 2020 or
+MONTH(R.datoFecha) = 1 and YEAR(R.datoFecha) = 2021)
+GROUP BY MONTH(R.datoFecha),YEAR(R.datoFecha),p.location
+order by Aceleracion desc
+
 CREATE VIEW CONSULTA4
 AS 
 SELECT TOP 2 P.location as Pais,MAX(C.reproduction_rate) as Aceleracion,
